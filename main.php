@@ -1,4 +1,9 @@
 <?php
+session_start();
+
+require_once 'validations.php';
+
+require_login();
 //connect to database
 require_once 'database.php';
 $conn = db_connect();

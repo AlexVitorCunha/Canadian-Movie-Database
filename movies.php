@@ -1,4 +1,8 @@
 <?php
+session_start();
+
+require_once 'validations.php';
+
 //connect to database
 require_once 'database.php';
 $conn = db_connect();
@@ -19,8 +23,10 @@ $movies = db_queryAll($sql, $conn);
                 <th scope="col" class="text-center">Genre</th>
                 <th scope="col" class="text-center">Language</th>
                 <th scope="col" class="text-center col-2">iMDb url</th>
+                <?php if(is_logged_in()){ ?>
                 <th scope="col" class="text-center col-1">Edit</th>
                 <th scope="col" class="text-center col-2">Delete</th>
+                <?php }?>
             </tr>
         </thead>
         <tbody>
@@ -33,12 +39,14 @@ $movies = db_queryAll($sql, $conn);
                 <td class="text-center"><a href="<?php echo $movie['url'] ?>" target="_blank"
                         class="btn btn-warning"><span class="d-none d-sm-inline">See more</span> <i
                             class="bi bi-box-arrow-up-right"></i></a></td>
+                <?php if(is_logged_in()){ ?>
                 <td class="text-center"><a href="movie-edit.php?movie_id=<?php echo $movie['movie_id'];?>"
                         class="btn btn-secondary"><span class="d-none d-sm-inline">Edit</span> <i
                             class="bi bi-pencil-square"></i></a></td>
                 <td class="text-center"><a href="movie-delete.php?movie_id=<?php echo $movie['movie_id'];?>"
                         class="btn btn-danger"><span class="d-none d-sm-inline">Delete</span> <i
                             class="bi bi-trash"></i></a></td>
+                <?php } ?>
             </tr>
             <?php } ?>
         </tbody>

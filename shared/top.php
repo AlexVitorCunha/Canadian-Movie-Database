@@ -33,15 +33,26 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="movies.php">Movie List</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="movie.php">Add Movie</a>
-                            </li>
+                            <?php if(is_logged_in()){ ?>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="movie.php">Add Movie</a>
+                                </li>
+                            <?php }?>
                         </ul>
                         <ul class="navbar-nav d-flex">
-                            <li class="nav-item">
-                                <button class="btn btn-danger btn-lg">Logout <i
-                                        class="bi bi-box-arrow-right"></i></button>
-                            </li>
+                            <?php if(is_logged_in()){ ?>
+                                <li class="nav-item">
+                                    <a class="btn btn-danger btn-lg" href="logout.php">Logout <i
+                                            class="bi bi-box-arrow-right"></i></a>
+                                </li>
+                                <?php }else{?>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="login.php">Login</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="register.php">Register</a>
+                                    </li>
+                                <?php }?>     
                         </ul>
                     </div>
                 </div>

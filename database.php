@@ -8,6 +8,7 @@ function db_queryAll($sql, $conn){
         $cmd -> execute();
         return $cmd->fetchAll(); 
     } catch (Exception $e) {
+        // mail('200465920@student.georgianc.on.ca', 'PDO error', $e);
         header("Location: error.php");
     }
     

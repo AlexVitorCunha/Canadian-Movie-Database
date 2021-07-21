@@ -9,6 +9,7 @@ require_once 'database.php';
 $conn = db_connect();
 ?>
 <?php
+$title_tag = 'Home';
 include_once './shared/top.php';
 ?>
 

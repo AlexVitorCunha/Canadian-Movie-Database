@@ -8,6 +8,7 @@ require_once 'database.php';
 $conn = db_connect();
 ?>
 <?php
+$title_tag = 'Movie List';
 include_once './shared/top.php';
 //build a sql query
 $sql = "SELECT * FROM movies ORDER BY movie_title";

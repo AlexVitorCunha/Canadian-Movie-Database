@@ -11,6 +11,27 @@
         }
     }
 
+    function validate_movie($movie){
+        $errors = [];
+        if(empty($movie['movie_title'])){
+            $errors['title'] = "Please enter a title";
+        }
+        if(empty($movie['genre'])){
+            $errors['genre'] = "Please enter a genre";
+        }
+
+        if(empty($movie['release_date'])){
+            $errors['date'] = "Please enter a date";
+        }
+        
+        $imdb_regex = "/https:\/\/www.imdb.com\/title\/tt[0-9]{7}/";
+        
+        if(empty($movie['url']) || !preg_match($imdb_regex, $movie['url'])){
+            $errors['imdb'] = "Please enter a valid url";   
+        }
+        return $errors;
+    }
+
     function validate_registration($user, $conn){
         $errors = [];
         $email_regex = "/.+\@.+\..+/";

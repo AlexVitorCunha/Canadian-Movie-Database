@@ -11,6 +11,7 @@ $conn = db_connect();
 ?>
 
 <?php
+    $title_tag = 'Edit movie';
     include_once './shared/top.php';
     if($_SERVER['REQUEST_METHOD'] == 'GET'){
         $id = filter_var($_GET['movie_id'], FILTER_SANITIZE_NUMBER_INT);
@@ -20,33 +21,26 @@ $conn = db_connect();
     }
     else if($_SERVER['REQUEST_METHOD'] == 'POST')
     {
-        $title = trim(filter_var($_POST['title'],FILTER_SANITIZE_STRING));
-        $date = trim(filter_var($_POST['date'],FILTER_SANITIZE_STRING));
+        $title = trim(filter_var($_POST['movie_title'],FILTER_SANITIZE_STRING));
+        $date = trim(filter_var($_POST['release_date'],FILTER_SANITIZE_STRING));
         $genre = trim(filter_var($_POST['genre'],FILTER_SANITIZE_STRING));
         $language = $_POST['language'];
         $imdb = trim(filter_var($_POST['imdb'],FILTER_SANITIZE_STRING));
         $id = trim(filter_var($_POST['movie_id'], FILTER_SANITIZE_NUMBER_INT));
 
-        $is_form_valid = true;
+        //create an associative array on the user input
+        $movie = [];
+        $movie['movie_title'] = $title;
+        $movie['release_date'] = $date;
+        $movie['genre'] = $genre;
+        $movie['language'] = $language;
+        $movie['url'] = $imdb;
 
-        //check if all inputs are valid
-        if(empty($title)){
-            echo "Please enter a title";
-            $is_form_valid = false;
-        }
-        if(empty($date)){
-            echo "Please enter a date";
-            $is_form_valid = false;
-        }
+        //validate the inputs
+        $errors = validate_movie($movie);
 
-        $imdb_regex = "/https:\/\/www.imdb.com\/title\/tt[0-9]{7}/";
-
-        if(empty($imdb) || !preg_match($imdb_regex, $imdb)){
-            echo "Please enter a valid url";
-            $is_form_valid = false;
-        }
-
-        if($is_form_valid){
+        //if there are no errors, update db
+        if(empty($errors)){
             try{
                 //set up the SQL INSERT command
                 $sql = "UPDATE movies SET movie_title=:title, ";
@@ -64,13 +58,11 @@ $conn = db_connect();
 
                 //execute the command
                 $cmd -> execute();
-
-                //disconnect from the db
-                $conn = null;
-
                 header("Location: movies.php");
+                exit;
             } catch (Exception $e) {
                 header("Location: error.php");
+                exit;
             }
             
         }
@@ -84,21 +76,24 @@ $conn = db_connect();
         <div class="row mb-4">
             <label for="title" class="col-lg-2 col-0 col-form-label fs-5 text-lg-end text-center">Movie Title</label>
             <div class="col-lg-10 col-12">
-                <input required type="text" name="title" class="form-control form-control-lg" value="<?php echo $movie['movie_title'] ?>">
+                <input required type="text" name="movie_title" class="<?= (isset($errors['title']) ? 'is-invalid ' : ''); ?>form-control form-control-lg" value="<?= $movie['movie_title'] ?>">
+                <p class="text-danger"><?= $errors['title'] ?? ''; ?></p>
             </div>
         </div>
 
         <div class="row mb-4">
             <label for="date" class="col-lg-2 col-0 col-form-label fs-5 text-lg-end text-center">Release Date</label>
             <div class="col-lg-10 col-12">
-                <input type="date" name="date" class="form-control form-control-lg" value="<?php echo $movie['release_date'] ?>">
+                <input type="date" name="release_date" class="<?= (isset($errors['date']) ? 'is-invalid ' : ''); ?>form-control form-control-lg" value="<?= $movie['release_date'] ?>">
+                <p class="text-danger"><?= $errors['date'] ?? ''; ?></p>
             </div>
         </div>
 
         <div class="row mb-4">
             <label for="genre" class="col-lg-2 col-0 col-form-label fs-5 text-lg-end text-center">Genre</label>
             <div class="col-lg-10 col-12">
-                <input type="text" name="genre" class="form-control form-control-lg" value="<?php echo ucfirst($movie['genre']) ?>">
+                <input type="text" name="genre" class="<?= (isset($errors['genre']) ? 'is-invalid ' : ''); ?>form-control form-control-lg" value="<?php echo ucfirst($movie['genre']) ?>">
+                <p class="text-danger"><?= $errors['genre'] ?? ''; ?></p>
             </div>
         </div>
 
@@ -121,7 +116,8 @@ $conn = db_connect();
         <div class="row mb-4">
             <label for="imdb" class="col-lg-2 col-0 col-form-label fs-5 text-lg-end text-center">iMDb link</label>
             <div class="col-lg-10 col-12">
-                <input required pattern="https:\/\/www.imdb.com\/title\/tt[0-9]{7}"  type="text" name="imdb" class="form-control form-control-lg" value="<?php echo $movie['url'] ?>">
+                <input required pattern="https:\/\/www.imdb.com\/title\/tt[0-9]{7}"  type="text" name="imdb" class="<?= (isset($errors['imdb']) ? 'is-invalid ' : ''); ?>form-control form-control-lg" value="<?php echo $movie['url'] ?>">
+                <p class="text-danger"><?= $errors['imdb'] ?? ''; ?></p>
             </div>
         </div>
 

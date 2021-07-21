@@ -10,6 +10,7 @@ require_once 'database.php';
 $conn = db_connect();
 ?>
 <?php
+$title_tag = 'error';
 include_once './shared/top.php';
 ?>
 

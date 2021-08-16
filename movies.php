@@ -11,22 +11,45 @@ $conn = db_connect();
 $title_tag = 'Movie List';
 include_once './shared/top.php';
 //build a sql query
-$sql = "SELECT * FROM movies ORDER BY movie_title";
+$sql = "SELECT * FROM movies";
+// will store the separate words that the user is searching
+$word_list = [];
+
+if(!empty($keywords)){
+    $sql .= " WHERE "; 
+
+    // split the multiple keywords into an array using php explode
+    $word_list = explode(" ", $keywords);
+
+    //loop through tje word list array, and add each word to the where
+    foreach($word_list as $key => $word) {
+        // but for the first word, omit the word OR
+        if ($key == 0) {
+            $sql .= "movie_title LIKE '%" . $word . "%'";
+        }else{
+            $sql .= " OR movie_title like '%" . $word . "%'";
+        }
+    }
+
+}
+
+$sql .= " ORDER by movie_title";
+
 $movies = db_queryAll($sql, $conn);
 ?>
 
 <div class="table-responsive mt-4 ms-4 me-4">
-    <table class="table table-striped table-bordered fs-5">
+    <table class="sortable table table-striped table-bordered fs-5">
         <thead>
             <tr>
                 <th scope="col" class="text-center">Title</th>
                 <th scope="col" class="text-center">Release Date</th>
                 <th scope="col" class="text-center">Genre</th>
                 <th scope="col" class="text-center">Language</th>
-                <th scope="col" class="text-center col-2">iMDb url</th>
+                <th scope="col" class="text-center col-2 sorttable_nosort">iMDb url</th>
                 <?php if(is_logged_in()){ ?>
-                <th scope="col" class="text-center col-1">Edit</th>
-                <th scope="col" class="text-center col-2">Delete</th>
+                <th scope="col" class="text-center col-1 sorttable_nosort">Edit</th>
+                <th scope="col" class="text-center col-2 sorttable_nosort">Delete</th>
                 <?php }?>
             </tr>
         </thead>
@@ -55,5 +78,9 @@ $movies = db_queryAll($sql, $conn);
 </div>
 
 <?php
+$t = filter_var($_GET['t'] ?? '', FILTER_SANITIZE_STRING);
+$msg = filter_var($_GET['msg'] ?? '', FILTER_SANITIZE_STRING);
+
+display_toast($t, $msg);
 include_once './shared/footer.php';
 ?>

@@ -1,3 +1,12 @@
+<?php
+
+$keywords = "";
+if(isset($_GET['k'])){
+   $keywords = filter_var($_GET['k'], FILTER_SANITIZE_STRING); 
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,12 +46,22 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="movies.php">Movie List</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="getjson2.html">Gallery</a>
+                            </li>
                             <?php if(is_logged_in()){ ?>
                                 <li class="nav-item">
                                     <a class="nav-link" href="movie.php">Add Movie</a>
                                 </li>
                             <?php }?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="store.php">Store</a>
+                            </li>
                         </ul>
+                        <form class="d-flex pe-5" action="movies.php" method="GET">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="k" value="<?= $keywords ?>" >
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        </form>
                         <ul class="navbar-nav d-flex">
                             <?php if(is_logged_in()){ ?>
                                 <li class="nav-item dropdown">

@@ -29,6 +29,14 @@
         if(empty($movie['url']) || !preg_match($imdb_regex, $movie['url'])){
             $errors['imdb'] = "Please enter a valid url";   
         }
+
+        if(isset($movie['size']) && $movie['size'] > 1000000){
+            $errors['pic'] = "Image must be less than 1MB";
+        }
+
+        if(isset($movie['type']) && !($movie['type'] == 'image/jpeg' || $movie['type'] == 'image/png')){
+            $errors['pic'] = "Image format must be .jpg or .png";
+        }
         return $errors;
     }
 
@@ -62,6 +70,41 @@
         }
 
         return $errors;
+    }
+
+    function display_toast($t, $msg){
+        if(!($t && $msg)) {
+            return;
+        }
+
+        $msgs = [];
+        $msgs['1'] = "Succcessfully Deleted";
+        $msgs['2'] = "Successfully Edited";
+        $msgs['3'] = "Successfully Added";
+
+        echo <<<EOL
+        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header bg-dark text-light">
+            <strong class="me-auto">$msgs[$t]</strong>
+            <small>11 mins ago</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body bg-dark text-light">
+            $msg
+            </div>
+        </div>
+        </div>
+        <script>
+        window.addEventListener('DOMContentLoaded', () => {
+           var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+            var toastList = toastElList.map(function (toastEl) {
+            return new bootstrap.Toast(toastEl)
+            });
+            toastList.forEach(toast =>  toast.show()) 
+        }); 
+        </script>
+        EOL;
     }
 
 ?>

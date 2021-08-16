@@ -68,13 +68,13 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
 }else if($_SERVER['REQUEST_METHOD'] == 'POST'){
     try{
         $id = filter_var($_POST['movie_id'], FILTER_SANITIZE_NUMBER_INT);
-
+        $title = trim(filter_var($_POST['title'], FILTER_SANITIZE_STRING));
         $sql = "DELETE FROM movies WHERE movie_id=" . $id;
 
         $cmd = $conn->prepare($sql);
         $cmd -> execute();
 
-        header("Location: movies.php");
+        header("Location: movies.php?t=1&msg=" . $title);
     } catch (Exception $e) {
         header("Location: error.php");
     }

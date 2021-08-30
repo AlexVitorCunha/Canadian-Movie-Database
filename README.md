@@ -2,7 +2,7 @@
 
 Here's my demo - https://www.loom.com/share/802b5d55a79c44b8ad5a2ef858f5d2d2
 
-![Screenshot of my project](./img/screenshot.png)
+![Screenshot of my project](./img/screenshot.jpg)
 
 ## Purpose
 

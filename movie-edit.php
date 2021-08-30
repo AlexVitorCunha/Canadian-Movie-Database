@@ -154,7 +154,7 @@ $conn = db_connect();
         <div class="row justify-content-center col-12 col-md-9">
             <input readonly class="form-control form-control-lg" type="hidden" name="poster" value=<?= $movie['poster']?>>
             <input readonly class="form-control form-control-lg" type="hidden" name="movie_id" value=<?php echo  $id?>>
-            <button class="btn btn-outline-success btn-lg">Update Game</button>
+            <button class="btn btn-outline-success btn-lg">Update Movie</button>
         </div>
     </form>
 </div>

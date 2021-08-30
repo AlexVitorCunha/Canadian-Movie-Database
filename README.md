@@ -1,8 +1,8 @@
 # Canadian Movie Database Website
 
-Here's my demo - https://loom.com/insert-your-Quiz13.5-loom-url-here
+Here's my demo - https://www.loom.com/share/802b5d55a79c44b8ad5a2ef858f5d2d2
 
-![Screenshot of my project](https://dummyimage.com/500x300)
+![Screenshot of my project](./img/screenshot.png)
 
 ## Purpose
 

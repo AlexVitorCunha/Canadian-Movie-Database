@@ -42,7 +42,7 @@
     </style>
   </head>
   <body>
-    <h1 style="text-align: center">80's ARCADE</h1>
+    <h1 style="text-align: center">Movie Gallery</h1>
 
     <main
       style="min-width: 60%; display: flex; flex-wrap: wrap"
@@ -132,16 +132,16 @@
         main.innerHTML = movies
           .map(
             (movie) => `
-            <article class="hide-child relative mb5 ba b--black-20 mw5 center" style="width: 200px">
-                <img height=150 src="${
-                  movie.poster ?? "https://dummyimage.com/200x150"
+            <article class="hide-child relative mb5 ba b--black-20 mw5 center" style="width: 240px">
+                <img height=360 src="${
+                  movie.poster ?? "https://dummyimage.com/240x360"
                 }" class="db" alt="${movie.movie_title}" />
                 <div class="pa2 bt b--black-20">
                 <h2 class="f6 db">${movie.movie_title}</h2>
                 <p class="f6 gray mv1">${movie.genre} @ ${movie.release_date}</p>
                 <a class="link tc ph3 pv1 db bg-animate bg-dark-blue hover-bg-blue white f6 br1" href="${
                   movie.url
-                }">Play</a>
+                }">Stream</a>
                 </div>
                 <a class="child absolute top-1 right-1 ba bw1 black-40 grow no-underline br-100 w1 h1 pa2 lh-solid b" href="#">×</a>
             </article>

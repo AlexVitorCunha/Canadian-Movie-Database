@@ -59,6 +59,10 @@
         {
             $errors['confirm'] = "Confirmation password cannot be blank";
         }
+        if(empty(trim($user['new-password'])) != empty(trim($user['confirm-password'])))
+        {
+            $errors['confirm'] = "Passwords must match";
+        }
 
         $sql = "SELECT * FROM cmdb_users WHERE username='" . $user['email'] . "'";
         $cmd = $conn -> prepare($sql);

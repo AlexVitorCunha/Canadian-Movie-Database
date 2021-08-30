@@ -1,7 +1,7 @@
 </div>
 <footer>
-    <div class="container-fluid">
-        <div class="card mt-5">
+    <div class="container-fullwidth">
+        <div class="card mt-0">
             <div class="card-body bg-dark text-light py-5">
                 <div class="row">
                     <p class="col text-center">&copy; 2021 | COMP1006 | AC</p>

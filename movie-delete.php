@@ -15,7 +15,7 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
 
     $sql = "SELECT * FROM movies WHERE movie_id=" . $id;
     $movie = db_queryOne($sql, $conn);
-
+    $title_tag = 'Delete';
     include_once './shared/top.php';
 ?>
 <h1 class="text-center mt-5 display-1 text-danger"><i class="bi bi-x-octagon"></i></h1>
@@ -81,5 +81,5 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
 
     
 }
-
+include_once './shared/footer.php';
 ?>

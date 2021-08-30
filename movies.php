@@ -6,8 +6,6 @@ require_once 'validations.php';
 //connect to database
 require_once 'database.php';
 $conn = db_connect();
-?>
-<?php
 $title_tag = 'Movie List';
 include_once './shared/top.php';
 //build a sql query

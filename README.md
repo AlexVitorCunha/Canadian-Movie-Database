@@ -17,8 +17,6 @@ Here's my demo - https://www.loom.com/share/802b5d55a79c44b8ad5a2ef858f5d2d2
 
 ## Launch
 
-- Visit [my project's website](https://lamp.computerstudi.es/~Alex200465920/COMP1006/project1/login.php) and feel free to register/login to play around
-
 To launch this, you'll have to clone my Github files to your PHP server, change the credentials listed in db_cred.php, and run my .sql scripts in your mysql database.
 
 ## Demo
